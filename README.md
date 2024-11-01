@@ -1,0 +1,2 @@
+# financial_manage_system
+基于SpringBoot+Layui的财务管理系统
