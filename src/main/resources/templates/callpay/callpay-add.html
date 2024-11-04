@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="/static/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/iconfont/iconfont.css">
+</head>
+
+<body>
+    <div class="z-body animated fadeIn">
+        <form action="" method="post" class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+                <label for="customerId" class="layui-form-label">
+                    选择客户
+                </label>
+                <div class="layui-input-block">
+                    <select name="customerId" id="customerId">
+                        <option th:each="temp:${customerList}" th:value="${temp.cId}"
+                                th:selected="${temp.cId==customer?.customerId}">[[${temp.cName}]]</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="callNo" class="layui-form-label">
+                    账单编号
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" id="callNo" name="callNo" th:value="${customer?.callNo}"
+                           lay-verify="required" lay-vertype="tips"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="cost" class="layui-form-label">
+                    费用
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" id="cost" name="cost" th:value="${customer?.cost}"
+                           lay-verify="required" lay-vertype="tips"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="cost" class="layui-form-label">
+                    到期时间
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" id="expireTime" name="expireTime" th:value="${customer?.expireTime}"
+                           lay-verify="required" lay-vertype="tips" placeholder="yyyy-MM-dd HH:mm:ss" readonly
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="status" class="layui-form-label">
+                    状态
+                </label>
+                <div class="layui-input-block">
+                    <select name="status" id="status">
+                        <option value="0" th:selected="${customer?.status==0}">未支付</option>
+                        <option value="1" th:selected="${customer?.status==1}">已支付</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left:0;text-align:center;">
+                    <input type="hidden" id="id" name="id" th:value="${customer?.id}">
+                    <button th:text="${customer}?'修改':'增加'"  class="layui-btn layui-btn-normal btn-w100" lay-submit="" data-th-lay-filter="${customer}?'edit':'add'"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js"></script>
+    <script src="/static/js/common.js"></script>
+
+    <script>
+        layui.config({
+            base: '/static/lib/layui/extend/'
+        }).extend({
+            formSelects: 'formSelects-v4'
+        }).use(['form', 'layer','laydate', 'formSelects', 'dtree'], function () {
+            $ = layui.jquery;
+            var form = layui.form
+                , layer = layui.layer
+                , laydate = layui.laydate
+                , formSelects = layui.formSelects;
+
+            laydate.render({
+                elem: '#expireTime'
+                ,type: 'datetime'
+                ,trigger : 'click'
+            });
+
+            form.on('submit(add)', function (form) {
+                $.post('/callpay', form.field, function (result) {
+                    handlerResult(result, addDone);
+                });
+                return false;
+            });
+
+            //监听提交
+            form.on('submit(edit)', function (form) {
+                $.post('/callpay/update', form.field, function (result) {
+                    handlerResult(result, editDone);
+                });
+                return false;
+            });
+
+            function addDone(data) {
+                layer.msg("添加成功", {icon: 6});
+            }
+
+            function editDone(data) {
+                layer.msg("修改成功", {icon: 6});
+            }
+        });
+    </script>
+</body>
+
+</html>

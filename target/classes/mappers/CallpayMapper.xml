@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cwgl.dao.CallpayMapper">
+
+
+    <select id="selectAll" resultType="com.example.cwgl.entity.Callpay" parameterType="com.example.cwgl.entity.Callpay">
+        select
+        *
+        from callpay
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from callpay where id=#{id}
+    </delete>
+
+    <insert id="add" parameterType="com.example.cwgl.entity.Callpay">
+        insert into callpay(customerId,callNo,cost,status,expireTime,payTime,createTime)
+        values(#{customerId},#{callNo},#{cost},#{status},#{expireTime},#{payTime},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.example.cwgl.entity.Callpay">
+        update callpay set `customerId`=#{customerId},callNo=#{callNo},
+        `cost`=#{cost},status=#{status},payTime=#{payTime}
+        where id=#{id}
+    </update>
+
+    <select id="selectOne" resultType="com.example.cwgl.entity.Callpay" parameterType="java.lang.Integer">
+        select
+        *
+        from callpay where id=#{id}
+    </select>
+
+    <select id="selectById" resultType="com.example.cwgl.entity.Customer" parameterType="java.lang.Integer">
+        select * from customer where cId=(select customerId from callpay where id=#{callpayId})
+    </select>
+
+</mapper>

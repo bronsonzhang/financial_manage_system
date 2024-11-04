@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="/static/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/iconfont/iconfont.css">
+</head>
+
+<body>
+    <div class="z-body animated fadeIn">
+        <form action="" method="post" class="layui-form layui-form-pane">
+
+            <div class="layui-form-item">
+                <label for="callType" class="layui-form-label">
+                    催缴类型
+                </label>
+                <div class="layui-input-block">
+                    <select name="callType" id="callType">
+                        <option value="0">邮箱催缴</option>
+                        <option value="1">短信催缴</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left:0;text-align:center;">
+                    <input type="hidden" name="callpayId" th:value="${callpayId}">
+                    <button th:text="'催缴'"  class="layui-btn layui-btn-normal btn-w100" lay-submit="" data-th-lay-filter="'add'"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js"></script>
+    <script src="/static/js/common.js"></script>
+
+    <script>
+        layui.config({
+            base: '/static/lib/layui/extend/'
+        }).extend({
+            formSelects: 'formSelects-v4'
+        }).use(['form', 'layer', 'formSelects', 'dtree'], function () {
+            $ = layui.jquery;
+            var form = layui.form
+                , layer = layui.layer
+                , formSelects = layui.formSelects;
+
+            form.on('submit(add)', function (form) {
+                $.post('/callpay/callType', form.field, function (result) {
+                    handlerResult(result, addDone);
+                });
+                return false;
+            });
+
+            function addDone(data) {
+                layer.msg("催缴成功", {icon: 6});
+            }
+
+            function editDone(data) {
+                layer.msg("修改成功", {icon: 6});
+            }
+        });
+    </script>
+</body>
+
+</html>

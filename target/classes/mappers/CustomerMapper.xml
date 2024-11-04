@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cwgl.dao.CustomerMapper">
+
+
+    <select id="selectAll" resultType="com.example.cwgl.entity.Customer" parameterType="com.example.cwgl.entity.Customer">
+        select
+        *
+        from customer
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from customer where cId=#{id}
+    </delete>
+
+    <insert id="add" parameterType="com.example.cwgl.entity.Customer">
+        insert into customer(cName,cNo,password,phone,company,address,email,createTime)
+        values(#{cName},#{cNo},#{password},#{phone},#{company},#{address},#{email},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.example.cwgl.entity.Customer">
+        update customer set `cName`=#{cName},phone=#{phone},password=#{password},cNo=#{cNo},
+        `company`=#{company},address=#{address},email=#{email}
+        where cid=#{cId}
+    </update>
+
+    <select id="selectOne" resultType="com.example.cwgl.entity.Customer" parameterType="java.lang.Integer">
+        select
+        *
+        from customer where cId=#{id}
+    </select>
+
+    <select id="selectByNo" resultType="com.example.cwgl.entity.Customer" parameterType="java.lang.String">
+        select
+        *
+        from customer where cNo=#{cNo} limit 1
+    </select>
+
+</mapper>

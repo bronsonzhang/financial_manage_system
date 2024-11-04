@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cwgl.dao.EmpMapper">
+
+
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from emp where id=#{id}
+    </delete>
+
+    <insert id="add" parameterType="com.example.cwgl.entity.Emp">
+        insert into emp(username,empNo,password,age,sex,salary,subsidy,socialSecurity,dateTime)
+        values(#{username},#{empNo},#{password},#{age},#{sex},#{salary},#{subsidy},#{socialSecurity},#{dateTime} )
+    </insert>
+
+    <update id="update" parameterType="com.example.cwgl.entity.Emp">
+        update emp set `username`=#{username},age=#{age},password=#{password},empNo=#{empNo},
+        `sex`=#{sex},salary=#{salary},subsidy=#{subsidy},socialSecurity=#{socialSecurity}
+        where id=#{id}
+    </update>
+
+    <select id="selectOne" resultType="com.example.cwgl.entity.Emp" parameterType="java.lang.Integer">
+        select
+        *
+        from emp where id=#{id}
+    </select>
+
+    <select id="selectByNo" resultType="com.example.cwgl.entity.Emp" parameterType="java.lang.String">
+        select
+        *
+        from emp where empNo=#{empNo} limit 1
+    </select>
+    <select id="selectAll" resultType="com.example.cwgl.entity.Emp" parameterType="com.example.cwgl.entity.Emp">
+        select
+            *
+        from emp
+    </select>
+    <select id="countEmp" resultType="java.lang.Integer">
+        select count(id) from emp;
+    </select>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cwgl.dao.ReportMapper">
+
+
+    <select id="selectAll" resultType="com.example.cwgl.entity.Report" parameterType="com.example.cwgl.entity.Report">
+        select
+        *
+        from Report
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from Report where id=#{id}
+    </delete>
+
+    <insert id="add" parameterType="com.example.cwgl.entity.Report">
+        insert into Report(reportName,reportPurpose,reportPath,dateTime)
+        values(#{reportName},#{reportPurpose},#{reportPath},#{dateTime})
+    </insert>
+
+    <update id="update" parameterType="com.example.cwgl.entity.Report">
+        update Report set `reportName`=#{reportName},reportPurpose=#{reportPurpose},reportPath=#{reportPath}
+        where id=#{id}
+    </update>
+
+    <select id="selectOne" resultType="com.example.cwgl.entity.Report" parameterType="java.lang.Integer">
+        select
+        *
+        from Report where id=#{id}
+    </select>
+
+</mapper>

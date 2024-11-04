@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cwgl.dao.BudgetMapper">
+
+
+    <select id="selectAll" resultType="com.example.cwgl.entity.Budget" parameterType="com.example.cwgl.entity.Budget">
+        select
+        *
+        from budget
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from budget where id=#{id}
+    </delete>
+
+    <insert id="add" parameterType="com.example.cwgl.entity.Budget">
+        insert into budget(projectName,content,money,cost,dateTime,remark,completeTime)
+        values(#{projectName},#{content},#{money},#{cost},#{dateTime},#{remark},#{completeTime} )
+    </insert>
+
+    <update id="update" parameterType="com.example.cwgl.entity.Budget">
+        update budget set `projectName`=#{projectName},content=#{content},
+        `money`=#{money},money=#{money},cost=#{cost},remark=#{remark},completeTime=#{completeTime}
+        where id=#{id}
+    </update>
+
+    <select id="selectOne" resultType="com.example.cwgl.entity.Budget" parameterType="java.lang.Integer">
+        select
+        *
+        from budget where id=#{id}
+    </select>
+
+</mapper>
